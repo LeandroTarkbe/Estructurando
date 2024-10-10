@@ -1,89 +1,168 @@
-/*COMO PRIMER PASO DEL PROYECTO ME GUSTARÍA DESARROLLAR UN LOGIN*/
-function iniciar(){
-    let usuario = prompt ("Ingrese Usuario") 
-    let contraseña = prompt ("Ingrese Contraseña")
+/*----------LOGIN DEL MODAL----------*/
+const modal = document.getElementById("loginModal")
+const SignIn = document.getElementById("signIn")
+let usuario = document.getElementById("user")
+let contraseña = document.getElementById("password")
+const signUp = document.getElementById("signUp")
 
-    if((usuario === "Leandro") && (contraseña === "1234")){
+let usuarios = [{nombre: "Leandro", contraseña: "1234"}]
+
+window.onload = function() {
+    modal.style.display = "block"
+}
+
+signUp.addEventListener("click", () => {
+    let nuevoUsuario = usuario.value;
+    let nuevaContraseña = contraseña.value;
+    let usuarioExistente = usuarios.find(usuario => usuario.nombre === nuevoUsuario)
+
+    if(nuevoUsuario.trim() === "" || nuevaContraseña.trim() === ""){
+        alert ("Los campos usuario y contraseña no pueden estar vacíos, reintente")
+        return
+    } if(nuevaContraseña.length < 4){
+        alert ("La contraseña debe tener al menos 4 dígitos")
+        return
+    } if(usuarioExistente){
+        alert ("El nombre de usuario ya se encuentra registrado, reintente")
+        return
+    }
+
+    usuarios.push({nombre: nuevoUsuario, contraseña: nuevaContraseña})
+    alert ("Registro Exitoso, ahora puede iniciar sesión")
+})
+
+signIn.addEventListener("click", (e) => {
+    e.preventDefault()
+    let usuarioValue = usuario.value;
+    let contraseñaValue = contraseña.value;
+    let usuarioExistente = usuarios.find(usuario => usuario.nombre === usuarioValue && usuario.contraseña === contraseñaValue)
+
+    if(usuarioValue.trim() === ""){
+        alert ("El campo Usuario no puede estar vacío")
+        return
+    } if(contraseñaValue.trim() === ""){
+        alert ("El campo Contraseña no puede estar vacío")
+        return
+    } if(contraseñaValue.length < 4){
+        alert ("La contraseña no puede tener menos de 4 caracteres")
+        return
+    } if(usuarioExistente){
         alert ("Bienvenido a Estructurando! Te ayudaremos a cotizar tu proyecto")
-    } else if ((usuario === "salir") || (contraseña === "salir")){
-        alert ("Gracias por utilizar Estructurando, vuelva pronto")
+        modal.style.display = "none"
         return
     } else {
         alert ("Usuario o contraseña incorrectos, por favor reintente")
-        iniciar()
     }
-}
-
-iniciar ()
+})
 
 
-/*A PARTIR DE ESTA LÍNEA SE SOLICITARÁN LAS PRECISIONES RESPECTO DE LO QUE SE PRETENDE CALCULAR, AL MOMENTO, LO ARMARÉ COMO UNA CADENA DE IF*/
-/*EN UNA SEGUNDA INSTANCIA, ME GUSTARIA QUE SE PUDIERAN DEFINIR PARÁMETROS COMO UBICACION DEL MURO (INT-INT / INT-EXT / EXT-EXT) PARA QUE EL PROGRAMA ORIENTE LAS PROPORCIONES DE LA MEZCLA A PARTIR DE ESE DATO*/
+/*----------INICIO DEL PROGRAMA----------*/
+const ubicacion = document.getElementById("ubicacion")
+let ladrilloSeleccionado = null
+let ubicacioSeleccionada = null
 
-let respuesta
-let tipologia
-let alto
-let largo
+const ubicacionesPosibles = [
+    {
+        id:1,
+        nombre:"Interior-Interior",
+        img:"./img/ubicacion.png"
+    },
+    {
+        id:2,
+        nombre:"Interior-Exterior",
+        img:"./img/ubicacion.png"
+    },
+    {
+        id:3,
+        nombre:"Exterior-Exterior",
+        img:"./img/ubicacion.png"
+    },
+]
 
-const superficie = (alto, largo) => {
-    return alto * largo
-}
+ubicacionesPosibles.forEach((element) => {
+    let div = document.createElement("div")
+    div.classList.add("ubicacion")
 
-function definirTipologia(){
-    respuesta = prompt ("Este contenido se encuentra en desarrollo, podemos ayudarlo con la cotización de muros de ladrillo, ¿Desea continuar?")
-    if (respuesta.toLowerCase() !== "si"){
-        alert ("Gracias por utilizar Estructurando")
-        return
-    }
-    
-    tipologia = prompt("¿Que tipo de muro desea calcular? Las opciones disponibles son:\n"+
-            "1) Ladrillo del 8\n"+
-            "2) Ladrillo del 12\n"+
-            "3) Ladrillo del 18\n"+
-            "4) Ladrillo Común de 0.30\n"+
-            "Ingrese el número de la opción deseada")
+    div.innerHTML = `
+    <img src=${element.img}>
+    <h4>${element.nombre}</h4>
+    <button>Seleccionar</button>
+    `
 
-        } if (tipologia === "1"){
-            alert ("Usted ha seleccionado Ladrillo del 8")
-        } else if (tipologia === "2") {
-            alert ("Usted ha seleccionado Ladrillo del 12")            
-        } else if (tipologia === "3"){
-            alert ("Usted ha seleccionado Ladrillo del 18")
-        } else if (tipologia === "4"){
-            alert ("Usted ha seleccionado Ladrillo Común en Muro de 0.30")
-        } 
-    
-definirTipologia()
+    div.querySelector("button").addEventListener("click", () => {
+        console.log("Ubicación Seleccionada")
+        ubicacioSeleccionada = element;
+        div.classList.add("selected")
+    })
 
+    ubicacion.appendChild(div)
+});
 
-function computar(){
-    if (tipologia === "1"){
-        alto = parseFloat(prompt("Ingrese el alto del muro"))
-        largo = parseFloat(prompt("Ingrese la longitud del muro"))
-        return superficie(alto, largo)
-    } else if (tipologia === "2"){
-        alto = parseFloat(prompt("Ingrese el alto del muro"))
-        largo = parseFloat(prompt("Ingrese la longitud del muro"))
-        return superficie(alto, largo)
-    } else if (tipologia === "3"){
-        alto = parseFloat(prompt("Ingrese el alto del muro"))
-        largo = parseFloat(prompt("Ingrese la longitud del muro"))
-        return superficie(alto, largo)
-    } else if (tipologia === "4"){
-        alto = parseFloat(prompt("Ingrese el alto del muro"))
-        largo = parseFloat(prompt("Ingrese la longitud del muro"))
-        return superficie(alto, largo)
-    }
-}
+const tipologia = document.getElementById("tipologia")
 
-/*EN UNA SEGUNDA INSTANCIA ME GUSTARÍA QUE EL USUARIO PUEDA DEFINIR OTROS PARÁMETROS COMO EL PRECIO*/
+const tiposDeLadrillos = [
+    {
+        id:1,
+        nombre:"Ladrillo Hueco del 8",
+        descripcion:"Ladrillo cerámico para muros interiores no portantes",
+        dimensiones:"8x18x33",
+        img:"./img/ladrilloHuecoDel8.jpg", 
+        precio:312,
+        rendimiento:15,
+    },
+    {
+        id:2,
+        nombre:"Ladrillo Hueco del 12",
+        descripcion:"Ladrillo cerámico para muros interiores y exteriores no portantes",
+        dimensiones:"12x18x33",
+        img:"./img/ladrilloHuecoDel12.png", 
+        precio:434,
+        rendimiento:16,
+    },
+    {
+        id:3,
+        nombre:"Ladrillo Hueco del 18",
+        descripcion:"Ladrillo cerámico para muros exteriores no portantes",
+        dimensiones:"18x18x33",
+        img:"./img/ladrilloHuecoDel18.jpg",
+        precio:690,
+        rendimiento:16,
+    },
+    {
+        id:4,
+        nombre:"Ladrillo Común",
+        descripcion:"Ladrillo de arcilla cocida en muros de 30 cm., portante",
+        dimensiones:"5x10x25",
+        img:"./img/ladrilloComun.jpg",
+        precio:222,
+        rendimiento:60,
+    },
+]
 
-let totalSuperficie = computar()
+tiposDeLadrillos.forEach((element) => {
+    let div = document.createElement("div")
+    div.classList.add("tipologia")
 
-let precioLadrilloDel8 = 312
-let precioLadrilloDel12 = 434
-let precioLadrilloDel18 = 690
-let precioLadrilloComun = 222
+    div.innerHTML = `
+    <img src=${element.img}>
+    <h4>${element.nombre}</h4>
+    <h5>${element.descripcion}</h5>
+    <h5>${element.dimensiones}</h5>
+    <button>Seleccionar</button>
+    `
+
+    div.querySelector("button").addEventListener("click", () => {
+        console.log("Ladrillo Seleccionado")
+        ladrilloSeleccionado = element
+        div.classList.add("selected")
+    })
+
+    tipologia.appendChild(div)    
+})
+
+/*----------DESARROLLO DEL CÁLCULO----------*/
+let alto = document.getElementById("alto")
+let largo = document.getElementById("largo")
 let precioCemento = 7206
 let precioCal = 3934
 let precioArena = 22314
@@ -92,53 +171,64 @@ let costoLadrillo
 let costoAridos
 let costoManoDeObra
 let costoTotal
-
-function costear(){
-    if (tipologia === "1"){
-        costoLadrillo = totalSuperficie * precioLadrilloDel8 * 15
-        costoAridos = ((totalSuperficie * precioArena * 0.012) + (totalSuperficie * precioCemento * 2.77) + (totalSuperficie * precioCal * 1.11))
-        costoManoDeObra = totalSuperficie * precioManoDeObra
-        costoTotal = costoLadrillo + costoAridos + costoManoDeObra
-    } else if (tipologia === "2"){
-        costoLadrillo = totalSuperficie * precioLadrilloDel12 * 16
-        costoAridos = ((totalSuperficie * precioArena * 0.018) + (totalSuperficie * precioCemento * 4.16) + (totalSuperficie * precioCal * 1.67))
-        costoManoDeObra = totalSuperficie * precioManoDeObra
-        costoTotal = costoLadrillo + costoAridos + costoManoDeObra
-    } else if (tipologia === "3"){
-        costoLadrillo = totalSuperficie * precioLadrilloDel18 * 16
-        costoAridos = ((totalSuperficie * precioArena * 0.027) + (totalSuperficie * precioCemento * 6.237) + (totalSuperficie * precioCal * 2.50))
-        costoManoDeObra = totalSuperficie * precioManoDeObra
-        costoTotal = costoLadrillo + costoAridos + costoManoDeObra
-    } else if(tipologia === "4"){
-        costoLadrillo = totalSuperficie * precioLadrilloDel18 * 60
-        costoAridos = ((totalSuperficie * precioArena * 0.016) + (totalSuperficie * precioCemento * 3.11) + (totalSuperficie * precioCal * 1.47))
-        costoManoDeObra = totalSuperficie * precioManoDeObra
-        costoTotal = costoLadrillo + costoAridos + costoManoDeObra
-    }
-}
-
-costear()
-
-
-let gastosGenerales
-let beneficio
-let costoFinanciero
-let impuestos
+let gastosGenerales = document.getElementById("gG")
+let beneficio = document.getElementById("benef")
+let costoFinanciero = document.getElementById("cF")
+let impuestos = document.getElementById("imp")
 let totalPorMetro
 let totalFinal
 
-function presupuestar(){
-    gastosGenerales = parseFloat(prompt("Ingrese % de Gastos Generales"))
-    beneficio = parseFloat(prompt("Ingrese % de Beneficio"))
-    costoFinanciero = parseFloat(prompt("Ingrese % de Costo Financiero"))
-    impuestos = parseFloat(prompt("Ingrese % de Impuestos"))
+let confirmarIngreso = document.getElementById("confirmarIngreso")
 
-    totalFinal = costoTotal * (1 + gastosGenerales / 100 + beneficio / 100 + costoFinanciero / 100 + impuestos / 100);
+confirmarIngreso.addEventListener("click", () => {
+    console.log("Botón Confirmar Ingreso presionado")
+    let altoValue = parseFloat(alto.value)
+    let largoValue = parseFloat(largo.value)
+    let gastosGeneralesValue = parseFloat(gastosGenerales.value)
+    let beneficioValue = parseFloat(beneficio.value)
+    let costoFinancieroValue = parseFloat(costoFinanciero.value)
+    let impuestosValue = parseFloat(impuestos.value)
 
-    totalPorMetro = totalFinal / totalSuperficie
+    if (isNaN(altoValue) || isNaN(largoValue) || !ladrilloSeleccionado || !ubicacioSeleccionada) {
+        alert("Por favor, complete todos los campos y seleccione un ladrillo")
+        return
+    }
 
-    alert("El costo total es $ " + totalFinal + "y el costo por m2 es de $ " + totalPorMetro)
+    const totalSuperficie = altoValue * largoValue
 
-}
+    costear(totalSuperficie)
+    presupuestar(totalSuperficie, costoTotal)
 
-presupuestar()
+    function costear(totalSuperficie){
+        if (ladrilloSeleccionado.id === 1){
+            costoLadrillo = totalSuperficie * ladrilloSeleccionado.precio * ladrilloSeleccionado.rendimiento
+            costoAridos = ((totalSuperficie * precioArena * 0.012) + (totalSuperficie * precioCemento * 2.77) + (totalSuperficie * precioCal * 1.11))        
+        } else if (ladrilloSeleccionado.id === 2){
+            costoLadrillo = totalSuperficie * ladrilloSeleccionado.precio * ladrilloSeleccionado.rendimiento
+            costoAridos = ((totalSuperficie * precioArena * 0.018) + (totalSuperficie * precioCemento * 4.16) + (totalSuperficie * precioCal * 1.67))
+        } else if (ladrilloSeleccionado.id === 3){
+            costoLadrillo = totalSuperficie * ladrilloSeleccionado.precio * ladrilloSeleccionado.rendimiento
+            costoAridos = ((totalSuperficie * precioArena * 0.027) + (totalSuperficie * precioCemento * 6.237) + (totalSuperficie * precioCal * 2.50))
+        } else if(ladrilloSeleccionado.id === 4){
+            costoLadrillo = totalSuperficie * ladrilloSeleccionado.precio * ladrilloSeleccionado.rendimiento
+            costoAridos = ((totalSuperficie * precioArena * 0.016) + (totalSuperficie * precioCemento * 3.11) + (totalSuperficie * precioCal * 1.47))
+        }
+        
+            costoManoDeObra = totalSuperficie * precioManoDeObra
+            costoTotal = costoLadrillo + costoAridos + costoManoDeObra
+        }
+
+        function presupuestar(totalSuperficie, costoTotal){
+            totalFinal = costoTotal * (1 + gastosGeneralesValue / 100 + beneficioValue / 100 + costoFinancieroValue / 100 + impuestosValue / 100);
+        
+            totalPorMetro = totalFinal / totalSuperficie
+        
+            const resultadoDiv = document.getElementById("resultadoDiv")
+            resultadoDiv.innerHTML = `
+            <p>Costo Total: $${totalFinal.toFixed(2)}</p>
+            <p>Costo por M2: $${totalPorMetro.toFixed(2)}</p>
+            `
+        }
+        
+
+})
