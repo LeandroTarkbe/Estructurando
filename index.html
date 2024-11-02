@@ -6,23 +6,13 @@
     <title>Cotizador de Obras de Construcción - ESTRUCTURANDO</title>
     <link rel="stylesheet" href="./css/style.css">    
 </head>
+
 <body>
-    <!--<header>
-        <h1>
-            COTIZADOR DE OBRAS DE CONSTRUCCION
-        </h1>
-        <h5>
-            Este proyecto consta de un cotizador de obras de construcción. Partiendo de parámetros como cantidad, altura, superficie, tecnología constructiva y materiales la aplicación deberá ser capaz de identificar las necesidades para la ejecución de tareas específicas con insumos que ya posea en su base de datos, aplicar un coeficiente de pase ingresado por el usuario y devolver un valor para la tarea.
-        </h5>
-        <h5>
-            De ser posible, la intención es que "guarde" los valores para tareas indivicuales y devuelva un valor global. Considerando la complejidad, iniciaré la misma codeando sobre muros, dejando de lado el resto de las posibles tareas.
-            Debe devolver un precio y una cantidad de materiales.
-        </h5>
-    </header>-->
     <header>
         <img class="logo" src="./img/Logo.png" alt="Logo Estructurando">
         <h3>Bienvenidos a Estructurando</h3>
         <h4>Software de Cómputo y Cálculo para Obras</h4>
+        <button id="logOut">Cerrar Sesión</button>
     </header>
     <main>
      <div id="loginModal" class="modal">
@@ -101,6 +91,8 @@
             </div> 
         </section>
 
+        <button id="toggleOperaciones">Mostrar Operaciones</button>
+        <div id="operacionesDiv" style="display: none;"></div>
     </main>
 
 
@@ -110,23 +102,24 @@
         <h5>Desarrollado por LAT</h5>
         <ul class="redesSociales">
             <li class="mail">
-                <img src="" alt="Logo Mail">
+                <img src="./img/email_542689.png" alt="Logo Mail">
                 <p>info@estructurando.com</p>
             </li>
-            <li class="telefono"></li>
-                <img src="" alt="Logo WhatsApp">
+            <li class="telefono">
+                <img src="./img/whatsapp_5968967.png" alt="Logo WhatsApp">
                 <p>+54 11 3689-7522</p>
             </li>
-            <li class="x"></li>
-                <img src="" alt="Logo X">
+            <li class="x">
+                <img src="./img/pngwing.com.png" alt="Logo X">
                 <p>@estructurandosoftware</p>
             </li>
-            <li class="instagram"></li>
-                <img src="" alt="Logo Instagram">
+            <li class="instagram">
+                <img src="./img/instagram_1384015.png" alt="Logo Instagram">
                 <p>@Estructurandooficial</p>
             </li>
         </ul>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./cotizador.js"></script>
 </body>
 </html>

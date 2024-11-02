@@ -1,0 +1,52 @@
+{
+"insumos":[
+    {
+        "nombre": "cemento",
+        "precio": 7206,
+        "unidad": "Bolsa por 50 kg.",
+        "id": "001"
+    },
+    {
+        "nombre": "cal",
+        "precio": 3934,
+        "unidad": "Bolsa por 25 kg.",
+        "id": "002"
+    },
+    {
+        "nombre": "arena",
+        "precio": 22314,
+        "unidad": "Bolsón por 1 m3",
+        "id": "003"
+    },
+    {
+        "nombre": "hidrofugo",
+        "precio": 1843,
+        "unidad": "En balde por kg",
+        "id": "004"
+    },
+    {
+        "nombre": "yesoProyectable",
+        "precio": 12635,
+        "unidad": "En bolsa por 25 kg",
+        "id": "005"
+    },    
+    {
+        "nombre": "manoDeObraMuro",
+        "precio": 5500,
+        "unidad": "Por m2 de muro ejecutado",
+        "id": "006"
+    },    
+    {
+        "nombre": "manoDeObraTerminacionInterior",
+        "precio": 4000,
+        "unidad": "Por m2 de yeso ejecutado",
+        "id": "007"
+    },
+    {
+        "nombre": "manoDeObraTerminacionExterior",
+        "precio": 4500,
+        "unidad": "Por m2 de revoque ejecutado",
+        "id": "008"
+    }
+]
+}
